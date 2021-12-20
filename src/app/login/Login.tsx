@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-import { AppRoute } from 'routing/AppRoute.enum';
+import { AppRoute } from "routing/AppRoute.enum";
 
-export const Login = () => {
+const Login = () => {
   return (
     <>
       <Link to={AppRoute.home}>Products page</Link>
@@ -26,3 +26,5 @@ export const Login = () => {
     </>
   );
 };
+
+export default Login;

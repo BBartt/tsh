@@ -1,0 +1,16 @@
+.header {
+  background: #ffffff;
+  padding: 48px 108px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .button {
+    width: 88px;
+  }
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
+}

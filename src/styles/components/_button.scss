@@ -1,0 +1,38 @@
+.button {
+  position: relative;
+
+  background-color: $lightBlue;
+  border-radius: 4px;
+  cursor: pointer;
+  color: $white;
+  border: none;
+  height: 38px;
+  width: 100%;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: $blue;
+  }
+
+  &:disabled {
+    background-color: $gray-4;
+  }
+}
+
+.outline {
+  border: 1px solid $lightBlue;
+  background-color: $white;
+  color: $lightBlue;
+
+  &:hover {
+    background-color: inherit;
+    border: 1px solid $blue;
+    color: $blue;
+  }
+
+  &:disabled {
+    background-color: inherit;
+    border: 1px solid $gray-4;
+    color: $gray-4;
+  }
+}

@@ -1,13 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Pagination from "components/Pagination";
+import ProductsCards from "components/ProductsCards";
 
-import { AppRoute } from "routing/AppRoute.enum";
+const productsArr = Array.from({ length: 7 }, (_, index) => index);
 
-export const Products = () => {
+const Products: React.FC = (): JSX.Element => {
   return (
-    <>
-      <h2>Products page</h2>
-      <Link to={AppRoute.login}> Login </Link>
-    </>
+    <div className="productsPage">
+      <ProductsCards>{productsArr}</ProductsCards>
+
+      <Pagination
+        currentPage={1}
+        totalCount={10}
+        pageSize={5}
+        onPageChange={(page: any) => console.log(page)}
+      />
+    </div>
   );
 };
+
+export default Products;
