@@ -1,17 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 
 import { AppProviders } from "providers/AppProviders";
 
 import { App } from "./app/App";
 import * as serviceWorker from "./serviceWorker";
 
+import store from "redux/store";
+
 import "./styles/index.scss";
 
 ReactDOM.render(
-  <AppProviders>
-    <App />
-  </AppProviders>,
+  <Provider store={store}>
+    <AppProviders>
+      <App />
+    </AppProviders>
+  </Provider>,
   document.getElementById("root")
 );
 

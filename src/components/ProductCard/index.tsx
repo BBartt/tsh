@@ -3,16 +3,22 @@ import Image from "components/Image";
 import { identity } from "utils";
 import Button from "components/Button";
 import Rating from "components/Rating";
+import { Item } from "interfaces";
 
-const ProductCard: React.FC = (): JSX.Element => {
+const ProductCard: React.FC<Omit<Item, "id">> = ({
+  name,
+  description,
+  rating,
+  image,
+  promo,
+  active,
+}): JSX.Element => {
   return (
     <div className="productCard">
-      <Image src="https://fakeimg.pl/290x170" alt="img" />
+      <Image src={image} alt={description} />
       <div className="content">
-        <h3 className="productCardTitle">White Watch</h3>
-        <p className="productCardDescription">
-          How To Protect Your Computer Very Useful Tips
-        </p>
+        <h3 className="productCardTitle">{name}</h3>
+        <p className="productCardDescription">{description}</p>
 
         <div className="actions">
           <Rating />
