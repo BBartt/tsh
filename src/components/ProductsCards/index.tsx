@@ -22,8 +22,6 @@ const ProductsCards: React.FC<IProducts> = ({
     return <Loader />;
   }
 
-  console.log(`children`, children);
-
   return (
     <div className="products">
       {children.length > 0 ? (

@@ -1,5 +1,6 @@
 import { ThunkAction } from "redux-thunk";
 import { AnyAction } from "redux";
+
 import { IData } from "interfaces";
 import { RootState } from "redux/store";
 import { productsApi } from "redux/api/productsApi";
@@ -8,6 +9,7 @@ import {
   FetchProductsBegin,
   FetchProductsSuccess,
   Constants,
+  GetRequestType,
 } from "./types";
 
 export const fetchProductsBegin = (): FetchProductsBegin => ({
@@ -32,15 +34,13 @@ export const getProducts =
     limit,
     page,
     search,
-  }: {
-    limit?: number;
-    page?: number;
-    search?: string;
-  }): ThunkAction<void, RootState, unknown, AnyAction> =>
+    active,
+    promo,
+  }: GetRequestType): ThunkAction<void, RootState, unknown, AnyAction> =>
   (dispatch) => {
     dispatch(fetchProductsBegin());
     productsApi
-      .get({ limit, page, search })
+      .get({ limit, page, search, active, promo })
       .then((res) => dispatch(fetchProductsSuccess(res.data)))
       .catch((err) => dispatch(fetchProductsFailure(err)));
   };

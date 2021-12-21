@@ -7,6 +7,7 @@ interface IInput {
   placeholder?: string;
   type?: string;
   icon?: string;
+  autoFocus?: boolean;
 }
 
 const Input: React.FC<IInput> = ({
@@ -15,6 +16,7 @@ const Input: React.FC<IInput> = ({
   type = "text",
   placeholder,
   icon,
+  autoFocus = false,
 }): JSX.Element => {
   return (
     <div className={`input-component`}>
@@ -24,6 +26,7 @@ const Input: React.FC<IInput> = ({
         onChange={onChange}
         value={value}
         placeholder={placeholder}
+        autoFocus={autoFocus}
       />
 
       {icon && (

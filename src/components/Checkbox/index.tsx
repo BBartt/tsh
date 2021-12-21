@@ -2,7 +2,7 @@ import React from "react";
 
 interface ICheckbox {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  checked: boolean;
+  checked: boolean | undefined;
   label?: string;
 }
 

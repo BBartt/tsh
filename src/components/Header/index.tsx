@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AppRoute } from "routing/AppRoute.enum";
 
@@ -8,11 +8,11 @@ import Button from "components/Button";
 import Input from "components/Input";
 import Icon from "components/Icon";
 import { identity } from "utils";
+import { SearchParamsContext } from "providers/AppProviders";
 
 const Header: React.FC = (): JSX.Element => {
-  const [search, setSearch] = useState<string>("");
-  const [isActive, setActive] = useState(false);
-  const [isPromo, setPromo] = useState(false);
+  const { searchParams, setSearchParams } = useContext(SearchParamsContext);
+  const { search, active, promo } = searchParams;
 
   return (
     <header className="header">
@@ -21,22 +21,38 @@ const Header: React.FC = (): JSX.Element => {
       </Link>
 
       <Input
-        onChange={({ target: { value } }) => setSearch(value)}
+        onChange={({ target: { value } }) =>
+          setSearchParams({
+            ...searchParams,
+            search: value,
+          })
+        }
         placeholder="Search"
         value={search}
         icon={IconEnum.magnifier}
+        autoFocus
       />
 
       <Checkbox
-        onChange={(event) => setActive(event.target.checked)}
-        checked={isActive}
+        onChange={({ target: { checked } }) =>
+          setSearchParams({
+            ...searchParams,
+            active: checked ? checked : undefined,
+          })
+        }
+        checked={active}
         label="Active"
       />
 
       <Checkbox
-        onChange={(event) => setPromo(event.target.checked)}
-        checked={isPromo}
-        label="Active"
+        onChange={({ target: { checked } }) =>
+          setSearchParams({
+            ...searchParams,
+            promo: checked ? checked : undefined,
+          })
+        }
+        checked={promo}
+        label="Promo"
       />
 
       <Button onClick={identity} hasOutline>

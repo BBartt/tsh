@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+
 import Pagination from "components/Pagination";
 import ProductsCards from "components/ProductsCards";
-import { useDispatch } from "react-redux";
 import { getProducts } from "redux/actions/products/actions";
-import { useAppSelector } from "hooks";
+import { SearchParamsContext } from "providers/AppProviders";
+import { useAppSelector, useDebounce } from "hooks";
 
 const Products: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -11,11 +13,17 @@ const Products: React.FC = (): JSX.Element => {
     limit: 8,
     page: 1,
   });
+
   const { isLoading, error, data } = useAppSelector((state) => state.products);
+  const { searchParams } = useContext(SearchParamsContext);
+  const debouncedSearch = useDebounce(searchParams.search);
+  const {
+    meta: { currentPage, totalItems },
+  } = data;
 
   useEffect(() => {
-    dispatch(getProducts(params));
-  }, [params]);
+    dispatch(getProducts({ ...params, ...searchParams }));
+  }, [params, debouncedSearch, searchParams.active, searchParams.promo]);
 
   return (
     <div className="productsPage">
@@ -24,8 +32,8 @@ const Products: React.FC = (): JSX.Element => {
       </ProductsCards>
 
       <Pagination
-        currentPage={1}
-        totalCount={10}
+        currentPage={currentPage}
+        totalCount={totalItems}
         pageSize={5}
         onPageChange={(page: any) => console.log(page)}
       />

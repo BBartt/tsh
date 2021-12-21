@@ -25,3 +25,11 @@ export type IActionProductsReducer =
   | FetchProductsBegin
   | FetchProductsSuccess
   | FetchProductsFail;
+
+export type GetRequestType = {
+  limit?: number;
+  page?: number;
+  search?: string;
+  active?: true | undefined;
+  promo?: true | undefined;
+};
