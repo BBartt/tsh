@@ -1,56 +1,80 @@
 import React from "react";
 
-export const DOTS = "...";
+interface IPagination {
+  pages: number;
+  currentPage: number;
+  onPageChange: (num: number) => void;
+}
 
-const Pagination: React.FC<any> = ({
-  onPageChange,
-  totalCount,
-  siblingCount = 1,
+const Pagination: React.FC<IPagination> = ({
+  pages,
   currentPage,
-  pageSize,
-  className,
-}): any => {
-  let paginationRange: number[] = [1, 2, 3, 5, 2, 2, 33];
+  onPageChange,
+}) => {
+  const pageNumbers: JSX.Element[] = [];
+  let ellipsis: boolean = false;
 
-  if (currentPage === 0 || paginationRange.length < 2) {
+  if (pages <= 1) {
     return null;
   }
 
-  const onNext = () => {
-    onPageChange(currentPage + 1);
+  const addPageToArr = (start: number, end: number) => {
+    for (let i = start; i <= end; i++) {
+      pageNumbers.push(
+        <li
+          onClick={() => onPageChange(i)}
+          className={`pagination-item${currentPage === i ? " selected" : ""}`}
+          key={i}
+        >
+          {i}
+        </li>
+      );
+    }
   };
 
-  const onPrevious = () => {
-    onPageChange(currentPage - 1);
-  };
+  if (pages > 7 && pages - currentPage >= 6) ellipsis = true;
+
+  if (ellipsis) {
+    let startPage = 1;
+    let siblingPage = 3;
+
+    if (currentPage - 1 > 0) {
+      startPage = currentPage - 1;
+      siblingPage = currentPage + 1;
+    }
+
+    addPageToArr(startPage, siblingPage);
+
+    pageNumbers.push(
+      <li className="elipsis" key="ellipsis">
+        ...
+      </li>
+    );
+
+    addPageToArr(pages - 2, pages);
+  } else {
+    if (pages <= 7) addPageToArr(1, pages);
+    else addPageToArr(pages - 6, pages);
+  }
 
   return (
-    <ul className={"pagination"}>
-      <li className={"pagination-item"} onClick={onPrevious}>
-        <div className="arrow left" />
+    <ul className="pagination">
+      <li
+        className={`pagination-item-first${
+          currentPage === 1 ? " disabled" : ""
+        }`}
+        onClick={() => currentPage !== 1 && onPageChange(1)}
+      >
+        First
       </li>
-      {paginationRange.map((pageNumber, index) => {
-        if (String(pageNumber) === DOTS) {
-          return (
-            <li key={index + pageNumber} className="pagination-item dots">
-              &#8230;
-            </li>
-          );
-        }
-
-        return (
-          <li
-            onClick={() => onPageChange(pageNumber)}
-            className={"pagination-item"}
-            key={index + pageNumber}
-          >
-            {pageNumber}
-          </li>
-        );
-      })}
-
-      <li className={"pagination-item"} onClick={onNext}>
-        <div className="arrow right" />
+      {pageNumbers}
+      <li
+        className={`pagination-item-last${
+          currentPage === pages ? " disabled" : ""
+        }`}
+        onClick={() => currentPage !== pages && onPageChange(pages)}
+      >
+        Last
       </li>
     </ul>
   );

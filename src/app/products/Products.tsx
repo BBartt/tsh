@@ -9,17 +9,22 @@ import { useAppSelector, useDebounce } from "hooks";
 
 const Products: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
-  const [params] = useState({
+  const [params, setParams] = useState({
     limit: 8,
     page: 1,
   });
 
   const { isLoading, error, data } = useAppSelector((state) => state.products);
   const { searchParams } = useContext(SearchParamsContext);
-  const debouncedSearch = useDebounce(searchParams.search);
+  const debouncedSearch = useDebounce(searchParams.search, 800);
   const {
-    meta: { currentPage, totalItems },
+    items,
+    meta: { currentPage, totalPages },
   } = data;
+
+  useEffect(() => {
+    setParams({ ...params, page: 1 });
+  }, [debouncedSearch, searchParams.active, searchParams.promo]);
 
   useEffect(() => {
     dispatch(getProducts({ ...params, ...searchParams }));
@@ -28,14 +33,13 @@ const Products: React.FC = (): JSX.Element => {
   return (
     <div className="productsPage">
       <ProductsCards isLoading={isLoading} error={error}>
-        {data.items}
+        {items}
       </ProductsCards>
 
       <Pagination
+        pages={totalPages}
         currentPage={currentPage}
-        totalCount={totalItems}
-        pageSize={5}
-        onPageChange={(page: any) => console.log(page)}
+        onPageChange={(page: number) => setParams({ ...params, page })}
       />
     </div>
   );
