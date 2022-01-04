@@ -6,6 +6,24 @@
   justify-content: space-between;
   align-items: center;
 
+  .container {
+    display: flex;
+    align-items: center;
+
+    max-width: 595px;
+    width: 595px;
+
+    .checkbox-component {
+      &:nth-child(2) {
+        margin-left: 24px;
+      }
+
+      &:nth-child(3) {
+        margin-left: 32px;
+      }
+    }
+  }
+
   .button {
     width: 88px;
   }

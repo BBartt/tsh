@@ -20,40 +20,42 @@ const Header: React.FC = (): JSX.Element => {
         <Icon type={IconEnum.logo} />
       </Link>
 
-      <Input
-        onChange={({ target: { value } }) =>
-          setSearchParams({
-            ...searchParams,
-            search: value,
-          })
-        }
-        placeholder="Search"
-        value={search}
-        icon={IconEnum.magnifier}
-        autoFocus
-      />
+      <div className="container">
+        <Input
+          onChange={({ target: { value } }) =>
+            setSearchParams({
+              ...searchParams,
+              search: value,
+            })
+          }
+          placeholder="Search"
+          value={search}
+          icon={IconEnum.magnifier}
+          autoFocus
+        />
 
-      <Checkbox
-        onChange={({ target: { checked } }) =>
-          setSearchParams({
-            ...searchParams,
-            active: checked ? checked : undefined,
-          })
-        }
-        checked={active}
-        label="Active"
-      />
+        <Checkbox
+          onChange={({ target: { checked } }) =>
+            setSearchParams({
+              ...searchParams,
+              active: checked ? checked : undefined,
+            })
+          }
+          checked={active}
+          label="Active"
+        />
 
-      <Checkbox
-        onChange={({ target: { checked } }) =>
-          setSearchParams({
-            ...searchParams,
-            promo: checked ? checked : undefined,
-          })
-        }
-        checked={promo}
-        label="Promo"
-      />
+        <Checkbox
+          onChange={({ target: { checked } }) =>
+            setSearchParams({
+              ...searchParams,
+              promo: checked ? checked : undefined,
+            })
+          }
+          checked={promo}
+          label="Promo"
+        />
+      </div>
 
       <Button onClick={identity} hasOutline>
         Log in
